@@ -25,9 +25,8 @@ In dieser Aufgabe habe ich grundlegende Kenntnisse im Umgang mit AWS (Amazon Web
   - **CPUs:** 1 vCPU
 - **Key-Pair:** Zwei SSH-Schlüssel (`levin1` und `levin2`) erstellt. Der erste Schlüssel wurde für den Zugriff ausgewählt.
 - **Ergebnisse:**  
-  ![Instanz-Liste](./img/instance_list.png)  
-  ![Instanz-Details](./img/instance_details.png)
-
+  ![Instanz-Liste](/levin_pamaym346/KN02/img/Screenshot%202024-11-23%20124232.png)  
+  
 ---
 
 ### **C. Zugriff mit SSH-Key (40%)**
@@ -41,14 +40,12 @@ In dieser Aufgabe habe ich grundlegende Kenntnisse im Umgang mit AWS (Amazon Web
      ssh -i ~/.ssh/levin1.pem ubuntu@[IP-Adresse]
      ```
      **Screenshot:**  
-     ![SSH Zugriff levin1](./img/ssh_levin1.png)
+     ![SSH Zugriff levin1](/levin_pamaym346/KN02/img/Screenshot%202024-11-22%20133958.png)
   2. **Verwendung des zweiten Schlüssels (`levin2`):**
      ```bash
      ssh -i ~/.ssh/levin2.pem ubuntu@[IP-Adresse]
      ```
-     **Screenshot:**  
-     ![SSH Zugriff levin2](./img/ssh_levin2.png)
-
+    
 ---
 
 ## **SSH mit Public/Private Keys**
@@ -60,6 +57,8 @@ SSH (Secure Shell) ist ein Protokoll, um eine sichere Verbindung zu einem Server
 ```bash
 ssh <user>@<server> -i <path-to-privatekey>/<private-key-file>.pem -o ServerAliveInterval=30
 ```
+**Screenshot:**  
+     ![SSH Zugriff levin1](/levin_pamaym346/KN02/img/Screenshot%202024-11-22%20152318.png)
 
 - **Standard-Benutzer:**  
   - Für Ubuntu-Instanzen: `ubuntu`  
@@ -119,5 +118,3 @@ ssh-keygen -y -f ~/.ssh/<keyname>.pem > ~/.ssh/<keyname>.pub
 - ✔ Sicherer Zugriff auf Remote-Server mit `ssh`.
 
 ---
-
-> **Hinweis:** Ersetze die Platzhalter (`./img/*.png`) durch deine eigenen Screenshots.
