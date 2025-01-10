@@ -1,0 +1,52 @@
+#cloud-config
+users:
+  - name: ubuntu
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: users, admin
+    home: /home/ubuntu
+    shell: /bin/bash
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDWF6xU3cvy6n+2E2Ei28zLQLY+cGJwhGeaCbgyrZE2otOQoHXY++iQK4cEJV0yxPI5C+WBega1eHzXIIvU5XXRN7vNO68CIri7ctPUJ56IpEjtUL+r/fbOhy4ra6o4lA306B1eUlkyyNaGjR+Ur65ZiR33bntKsP+u62oKI8xWugDXKj2DwNP1f1IWH+uFPM0mXl5TAE58aepK9GkeZx1nRlbaBdsf8SO8tFEmAaxVPRasLwddkSVQDhzrQdiM2q3fE9Pff9fNgPyw6Azyskq/eSIUmbf9zPM+6gQ3Bi0stp3D2l47dYDDSulDTn3rnAOfhgr1wwmbk7kTOXI8E6tR aws-key       
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDyWyGTDzzqq9YjuMqsrcXRMhZVrCbD+cnL2YLpTLbTli2jXcX6mISWVzrPQWEkF5OPWCVtWpUpyEgjwe7m7E5zvpI0bGiPrdzrPmO5SMhFI0gRJK5VdJEVl59XColb4ueqh3cwvpbX2kMV8fq04WY+So8mGFlZ+EB+SdvWkgdzde0KOoX8pZQje/rD6GpHF9Jjul075D1kmlS4aUlUmGkM3c6Z5j/phLjyTRayKOD/dZyTEVSGZaS9csd3Qu/b98qoH9VpvG7+ri+RNMh3IYkIpORJjhlCxxvb6uTR89WcvNT94kNBA0GUECQkguElLjx9WSR0RwimfOv4b+Ewj/sX tbz_aws_atilgan aws-key    
+ssh_pwauth: false
+disable_root: true
+package_update: true
+package_upgrade: true
+packages:
+  - apache2
+  - php
+  - php-mysql
+  - adminer
+  - mysql-client
+  - curl
+  - wget
+write_files:
+  - path: /var/www/html/index.html
+    content: |
+      <html>
+      <head><title>Webserver</title></head>
+      <body><h1>Webserver läuft!</h1></body>
+      </html>
+  - path: /var/www/html/info.php
+    content: |
+      <?php phpinfo(); ?>
+  - path: /var/www/html/db.php
+    content: |
+      <?php
+      $servername = "IP"; // Private IP des DB-Servers
+      $username = "admin";
+      $password = "Passwort";
+      $dbname = "MainDatabase";
+
+      $conn = new mysqli($servername, $username, $password, $dbname);
+
+      if ($conn->connect_error) {
+          die("Connection failed: " . $conn->connect_error);
+      }
+      echo "Connected successfully";
+      ?>
+runcmd:
+  - sudo apt update 
+  - sudo a2enconf adminer
+  - sudo systemctl restart apache2
+  - echo "Cloud-Init Web erfolgreich abgeschlossen" > /home/ubuntu/init.log

@@ -1,0 +1,21 @@
+#cloud-config
+users: # Benutzername
+  - name: ubuntu
+    sudo: ALL=(ALL) NOPASSWD:ALL # sudo-Regeln ohen Passwort für diesen Benutzer
+    groups: users, admin # Gruppen des Benutzers
+    home: /home/ubuntu # Ordner des Benutzers
+    shell: /bin/bash #  Standardshell des Benutzers  Bash
+    ssh_authorized_keys: # SSH-Schlüssel für die Authentifizierung
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDWF6xU3cvy6n+2E2Ei28zLQLY+cGJwhGeaCbgyrZE2otOQoHXY++iQK4cEJV0yxPI5C+WBega1eHzXIIvU5XXRN7vNO68CIri7ctPUJ56IpEjtUL+r/fbOhy4ra6o4lA306B1eUlkyyNaGjR+Ur65ZiR33bntKsP+u62oKI8xWugDXKj2DwNP1f1IWH+uFPM0mXl5TAE58aepK9GkeZx1nRlbaBdsf8SO8tFEmAaxVPRasLwddkSVQDhzrQdiM2q3fE9Pff9fNgPyw6Azyskq/eSIUmbf9zPM+6gQ3Bi0stp3D2l47dYDDSulDTn3rnAOfhgr1wwmbk7kTOXI8E6tR aws-key       
+ssh_pwauth: false # Deaktiviert die Passwortauthentifizierung für SSH
+disable_root: false # Ermöglicht die Root-Anmeldung
+package_update: true # Die Paketliste aktualisieren
+packages:
+  - curl
+  - wget
+runcmd:
+  - sudo apt update
+  - sudo apt install -y mariadb-server
+  - sudo mysql -sfu root -e "GRANT ALL ON *.* TO 'admin'@'%' IDENTIFIED BY '12345' WITH GRANT OPTION;"
+  - sudo sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/mariadb.conf.d/50-server.cnf
+  - sudo systemctl restart mariadb.service
