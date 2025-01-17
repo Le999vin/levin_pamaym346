@@ -6,7 +6,8 @@
 
 #### AWS (Amazon Web Services)
 
-![AWS Konfiguration](/levin_pamaym346/KN10/imgs/KN10_1.png "AWS Konfiguration")
+![Alt-Text](/levin_pamaym346/KN10/imgs/KN10_1.png)
+
 
 Für die Rehosting-Option bei AWS wurde folgende Infrastruktur gewählt:
 - **2 EC2-Instanzen**: Eine für den Webserver, eine für die Datenbank, zur Nachbildung der On-Premise-Infrastruktur.
