@@ -3,7 +3,6 @@ users:
   - name: ubuntu
     sudo: ALL=(ALL) NOPASSWD:ALL
     groups: users, admin
-    home: /home/ubuntu
     shell: /bin/bash
     ssh_authorized_keys:
       - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDWF6xU3cvy6n+2E2Ei28zLQLY+cGJwhGeaCbgyrZE2otOQoHXY++iQK4cEJV0yxPI5C+WBega1eHzXIIvU5XXRN7vNO68CIri7ctPUJ56IpEjtUL+r/fbOhy4ra6o4lA306B1eUlkyyNaGjR+Ur65ZiR33bntKsP+u62oKI8xWugDXKj2DwNP1f1IWH+uFPM0mXl5TAE58aepK9GkeZx1nRlbaBdsf8SO8tFEmAaxVPRasLwddkSVQDhzrQdiM2q3fE9Pff9fNgPyw6Azyskq/eSIUmbf9zPM+6gQ3Bi0stp3D2l47dYDDSulDTn3rnAOfhgr1wwmbk7kTOXI8E6tR aws-key       
@@ -12,14 +11,7 @@ ssh_pwauth: false
 disable_root: true
 package_update: true
 package_upgrade: true
-packages:
-  - apache2
-  - php
-  - php-mysql
-  - adminer
-  - mysql-client
-  - curl
-  - wget
+
 write_files:
   - path: /var/www/html/index.html
     content: |
@@ -33,10 +25,10 @@ write_files:
   - path: /var/www/html/db.php
     content: |
       <?php
-      $servername = "IP"; // Private IP des DB-Servers
+      $servername = "172.31.91.53"; // Private IP des DB-Servers
       $username = "admin";
       $password = "Passwort";
-      $dbname = "MainDatabase";
+      $dbname = "mysql";
 
       $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -47,6 +39,7 @@ write_files:
       ?>
 runcmd:
   - sudo apt update 
+  - sudo apt install -y apache2 php libapache2-mod-php php-mysqli
   - sudo a2enconf adminer
   - sudo systemctl restart apache2
   - echo "Cloud-Init Web erfolgreich abgeschlossen" > /home/ubuntu/init.log
